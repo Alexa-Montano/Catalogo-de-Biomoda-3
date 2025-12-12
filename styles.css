@@ -1,0 +1,274 @@
+/* --------------------------- */
+/*      TIPOGRAFÍAS BASE       */
+/* --------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --font-title: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+
+    --color-black: #000;
+    --color-white: #fff;
+    --color-gray-light: #f5f5f5;
+    --color-gray: #c9c9c9;
+
+    --transition: 0.3s ease;
+}
+
+/* --------------------------- */
+/*      ESTILO GLOBAL          */
+/* --------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-white);
+    color: var(--color-black);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-title);
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+/* --------------------------- */
+/*      HEADER ELEGANTE        */
+/* --------------------------- */
+header {
+    width: 100%;
+    text-align: center;
+    padding: 25px 0;
+    border-bottom: 1px solid var(--color-gray-light);
+}
+
+header h1 {
+    font-size: 40px;
+    letter-spacing: 3px;
+}
+
+/* --------------------------- */
+/*      MENÚ LATERAL           */
+/* --------------------------- */
+
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 25px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* Panel lateral */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px; /* Oculto inicialmente */
+    width: 260px;
+    height: 100%;
+    background: var(--color-white);
+    border-right: 1px solid var(--color-gray-light);
+    padding-top: 60px;
+    transition: var(--transition);
+    z-index: 999;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+/* Links */
+.sidebar ul {
+    list-style: none;
+    padding-left: 30px;
+}
+
+.sidebar ul li {
+    margin: 18px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: var(--color-black);
+    text-transform: uppercase;
+    transition: var(--transition);
+}
+
+.sidebar ul li a:hover {
+    opacity: 0.6;
+}
+
+/* --------------------------- */
+/*      CONTENIDO PRINCIPAL    */
+/* --------------------------- */
+main {
+    padding: 30px 40px;
+    transition: var(--transition);
+}
+
+main.shift {
+    margin-left: 260px;
+}
+
+/* --------------------------- */
+/*   TARJETAS DE PRODUCTOS     */
+/* --------------------------- */
+.card {
+    background: var(--color-white);
+    border: 2px solid var(--color-black);
+    padding: 15px;
+    border-radius: 5px;
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+/* Grid de prendas */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+
+/* --------------------------- */
+/*   CENTRAR LAS TRES TARJETAS */
+/* --------------------------- */
+
+.grid {
+    display: flex;
+    justify-content: center;   /* Centra horizontalmente */
+    gap: 30px;                 /* Espacio entre tarjetas */
+    flex-wrap: wrap;           /* Para que sean responsivas */
+    max-width: 1200px;         /* Mantiene un ancho elegante */
+    margin: 0 auto;            /* Centra todo el contenedor */
+    padding: 20px 0;
+}
+
+/* Ajustes visuales de cada card */
+.card {
+    width: 330px;              /* Hace que todas tengan el mismo tamaño */
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-light);
+    padding: 20px;
+    border-radius: 10px;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card h2 {
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* Inputs más uniformes */
+.card input,
+.card select,
+.card button {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 8px;
+}
+
+/* Botón dentro de las tarjetas */
+.card button {
+    background: var(--color-black);
+    color: var(--color-white);
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.card button:hover {
+    opacity: 0.7;
+}
+
+
+/* --------------------------- */
+/*      BOTONES GENERALES      */
+/* --------------------------- */
+.btn {
+    background: var(--color-black);
+    color: var(--color-white);
+    padding: 10px 20px;
+    border: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.btn:hover {
+    opacity: 0.7;
+}
+
+
+.logo-container {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.logo {
+    max-width: 300px;   /* Ajústalo según se vea mejor */
+    width: 70%;
+    height: 20%;
+}
+
+
+/* --------------------------- */
+/*     CONTENEDOR DE FORMAS    */
+/* --------------------------- */
+
+.forms-row {
+    display: flex;
+    justify-content: center;   /* Centra horizontalmente */
+    align-items: flex-start;
+    gap: 40px;                 /* Separación entre formularios */
+    margin-top: 30px;
+    flex-wrap: wrap;           /* Para que se acomoden bonito en pantallas pequeñas */
+}
+
+.form-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-light);
+    padding: 25px;
+    width: 320px;              /* Tamaño uniforme */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #00000015;
+    transition: var(--transition);
+}
+
+.form-card:hover {
+    transform: translateY(-3px);
+}
+
+.form-card h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: var(--font-title);
+}
+
+.form-card input,
+.form-card select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--color-gray);
+    border-radius: 5px;
+    margin-bottom: 12px;
+}

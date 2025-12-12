@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Biomoda</title>
+
+  <!-- NUEVO CSS PROFESIONAL -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- BOTÓN DEL MENÚ LATERAL -->
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+  <!-- MENÚ LATERAL DESPLEGABLE -->
+  <aside class="sidebar" id="sidebar">
+      <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/registrar.html">Registrar Usuario</a></li>
+          <li><a href="/login.html">Iniciar Sesión</a></li>
+          <li><a href="/busqueda.html">Buscar</a></li>
+          <li><a href="/prendas.html">Cargar Excel</a></li>
+          <li><a href="/download-prenda">Descargar Excel</a></li>
+          <li><a href="/prenda">Ver prendas guardadas</a></li>
+          <li><a href="/logout">Cerrar Sesión</a></li>
+      </ul>
+  </aside>
+
+  <!-- NAVBAR ORIGINAL (NO SE MODIFICA NADA) -->
+
+
+  <main id="main-content">
+
+ <header>
+      <h1>Bienvenido a Biomoda</h1>
+    </header>
+
+
+<!-- Logo debajo del título -->
+<div class="logo-container">
+    <img src="Biomoda.png" alt="Logo Biomoda" class="logo">
+</div>
+
+<center>  <h1>Gestion  de Prendas </h1> </center>
+
+    <!-- GRID PROFESIONAL PARA LAS TRES TARJETAS -->
+    <section class="grid">
+
+              <!-- REGISTRAR PRENDA -->
+        <!-- REGISTRAR PRENDA -->
+        <div class="card">
+          <h2>Registrar nueva prenda</h2>
+
+          <form id="formRegistrar" action="/agregar-prenda" method="POST">
+
+            <label>Nombre:</label>
+            <input type="text" name="nombre" required>
+
+            <label>Categoría:</label>
+            <input type="text" name="categoria" required>
+
+            <label>Precio:</label>
+            <input type="number" name="precio" step="0.01" required>
+
+            <label>Color:</label>
+            <input type="text" name="color">
+
+            <input type="checkbox" id="confirmRegistrar">
+            <label for="confirmRegistrar">Confirmo que los datos son correctos</label>
+
+            <button type="submit" id="btnRegistrar" disabled>Guardar prenda</button>
+          </form>
+
+          <button class="btn" onclick="window.location.href='/prenda'">Ver Prendas Guardadas</button>
+        </div>
+
+
+      <!-- ACTUALIZAR PRENDA -->
+      <div class="card">
+        <h2>Actualizar prenda</h2>
+
+        <form id="formActualizar">
+
+          <label>ID de prenda:</label>
+          <input type="number" id="id" required>
+
+          <label>Nombre:</label>
+          <input type="text" id="nombre" required>
+
+          <label>Categoría:</label>
+          <input type="text" id="categoria" required>
+
+          <label>Precio:</label>
+          <input type="number" id="precio" step="0.01" required>
+
+          <label>Color:</label>
+          <input type="text" id="color">
+
+          <input type="checkbox" id="confirmActualizar">
+          <label for="confirmActualizar">Confirmo que los datos son correctos</label>
+
+          <button type="submit" id="btnActualizar" disabled>Actualizar prenda</button>
+        </form>
+
+        <p id="respuesta" style="font-weight:bold;"></p>
+      </div>
+
+      <!-- ELIMINAR PRENDA -->
+      <div class="card">
+        <h2>Eliminar prenda</h2>
+
+        <form id="formEliminar">
+
+          <label>ID de la prenda a eliminar:</label>
+          <input type="number" id="idEliminar" required>
+
+          <input type="checkbox" id="confirmEliminar">
+          <label for="confirmEliminar">Confirmo que deseo eliminar esta prenda</label>
+
+          <button type="submit" id="btnEliminar" disabled>Eliminar prenda</button>
+        </form>
+
+        <p id="respuestaEliminar" style="font-weight:bold;"></p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- SCRIPT DEL MENÚ -->
+  <script>
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      const main = document.getElementById("main-content");
+
+      sidebar.classList.toggle("open");
+      main.classList.toggle("shift");
+    }
+  </script>
+
+  <!-- SCRIPTS ORIGINALES (NO SE MODIFICA NADA) -->
+  <script>
+    const checkRegistrar = document.getElementById('confirmRegistrar');
+    const btnRegistrar = document.getElementById('btnRegistrar');
+    checkRegistrar.addEventListener('change', () => {
+      btnRegistrar.disabled = !checkRegistrar.checked;
+    });
+  </script>
+
+  <script>
+    const checkActualizar = document.getElementById('confirmActualizar');
+    const btnActualizar = document.getElementById('btnActualizar');
+    const formActualizar = document.getElementById('formActualizar');
+    const respuesta = document.getElementById('respuesta');
+
+    checkActualizar.addEventListener('change', () => {
+      btnActualizar.disabled = !checkActualizar.checked;
+    });
+
+    formActualizar.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!checkActualizar.checked) {
+        respuesta.textContent = 'Debes confirmar los datos antes de actualizar';
+        return;
+      }
+
+      const id = document.getElementById('id').value;
+      const nombre = document.getElementById('nombre').value;
+      const categoria = document.getElementById('categoria').value;
+      const precio = document.getElementById('precio').value;
+      const color = document.getElementById('color').value;
+
+      try {
+        const res = await fetch(`/api/prenda/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, categoria, precio, color })
+        });
+
+        const text = await res.text();
+        respuesta.textContent = text;
+
+      } catch (error) {
+        respuesta.textContent = 'Error al conectar con el servidor';
+      }
+    });
+  </script>
+
+  <script>
+    const checkEliminar = document.getElementById('confirmEliminar');
+    const btnEliminar = document.getElementById('btnEliminar');
+    const formEliminar = document.getElementById('formEliminar');
+    const respuestaEliminar = document.getElementById('respuestaEliminar');
+
+    checkEliminar.addEventListener('change', () => {
+      btnEliminar.disabled = !checkEliminar.checked;
+    });
+
+    formEliminar.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!checkEliminar.checked) {
+        respuestaEliminar.textContent = 'Debes confirmar para eliminar';
+        return;
+      }
+
+      const id = document.getElementById('idEliminar').value;
+
+      try {
+        const res = await fetch(`/api/prenda/${id}`, {
+          method: 'DELETE'
+        });
+
+        const text = await res.text();
+        respuestaEliminar.textContent = text;
+
+      } catch (error) {
+        respuestaEliminar.textContent = 'Error al conectar con el servidor';
+      }
+    });
+  </script>
+
+</body>
+</html>

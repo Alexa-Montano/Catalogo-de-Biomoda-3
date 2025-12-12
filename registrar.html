@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Usuario</title>
+
+  <style>
+    /* ============================ */
+    /*      ESTILO GLOBAL LOGIN     */
+    /* ============================ */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: row; /* → Imagen izquierda + login derecha */
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f8f8;
+      overflow: hidden;
+    }
+
+    /* Panel izquierdo con imagen */
+    .left-image {
+      width: 45%;             /* 40–50% del ancho */
+      height: 100vh;          /* ocupa toda la altura */
+      background-image: url("FondoLado.png");
+      background-size: cover; 
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Contenedor del login */
+    .right-content {
+      width: 55%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    /* Logo arriba */
+    .auth-logo {
+      width: 120px;
+      opacity: 0.85;
+      margin-bottom: 15px;
+    }
+
+    /* Contenedor elegante */
+    .auth-container {
+      background: #fff;
+      width: 380px;
+      padding: 35px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border: 1px solid #e5e5e5;
+    }
+
+    /* Título */
+    .auth-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    /* FORMULARIO */
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .auth-form label {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .auth-form input,
+    .auth-form select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .auth-form input:focus,
+    .auth-form select:focus {
+      border-color: #000;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    }
+
+    /* Botón */
+    .btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      opacity: 0.8;
+    }
+
+    /* Link inferior */
+    .auth-link {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #000;
+    }
+
+    .auth-link a {
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .auth-link a:hover {
+      opacity: 0.7;
+    }
+
+    /* Mensaje de éxito */
+    .success-message {
+      display: none;
+      background: #ffffff;
+      border: 1px solid #d6d6d6;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      color: #111;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Adaptación a pantallas pequeñas */
+    @media (max-width: 850px) {
+      .left-image {
+        display: none; /* Se oculta la imagen en pantallas pequeñas */
+      }
+      .right-content {
+        width: 100%;
+      }
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <!-- PANEL IZQUIERDO -->
+  <div class="left-image"></div>
+
+  <!-- PANEL DERECHO -->
+  <div class="right-content">
+
+    <!-- LOGO -->
+    <img src="Biomoda.png" class="auth-logo">
+
+    <!-- CONTENEDOR -->
+    <div class="auth-container">
+
+      <!-- MENSAJE QUE APARECERÁ CUANDO EXITO=1 -->
+      <div id="msgExito" class="success-message">
+        ✓ Usuario registrado exitosamente
+      </div>
+
+      <h2>Registrar Usuario</h2>
+
+      <form class="auth-form" action="/registrar" method="POST">
+
+        <label>Nombre:</label>
+        <input type="text" name="nombre" required>
+
+        <label>Correo:</label>
+        <input type="email" name="correo" required>
+
+        <label>Contraseña:</label>
+        <input type="password" name="contrasena" required>
+
+        <label>Rol:</label>
+        <select name="rol" required>
+          <option value="ASISTENTE" selected>Asistente</option>
+          <option value="ADMIN">Administrador</option>
+          <option value="CLIENTE">Cliente</option>
+        </select>
+
+        <button type="submit" class="btn">Registrar</button>
+
+      </form>
+
+      <p class="auth-link">¿Ya tienes cuenta? <a href="/login.html">Inicia sesión aquí</a></p>
+
+    </div>
+  </div>
+
+  <script>
+    const url = new URLSearchParams(window.location.search);
+    if (url.get("exito") === "1") {
+      document.getElementById("msgExito").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

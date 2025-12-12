@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f8f8;
+      overflow: hidden;
+    }
+
+    /* PANEL IZQUIERDO CON IMAGEN */
+    .left-image {
+      width: 45%;
+      height: 100vh;
+      background-image: url("FondoLateral.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* PANEL DERECHO */
+    .right-content {
+      width: 55%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    /* LOGO */
+    .auth-logo {
+      width: 120px;
+      opacity: 0.85;
+      margin-bottom: 15px;
+    }
+
+    /* TARJETA DEL FORMULARIO */
+    .auth-container {
+      background: #fff;
+      width: 380px;
+      padding: 35px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border: 1px solid #e5e5e5;
+    }
+
+    .auth-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    /* FORMULARIO */
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .auth-form label {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .auth-form input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .auth-form input:focus {
+      border-color: #000;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    }
+
+    /* BOTÓN */
+    .btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      opacity: 0.8;
+    }
+
+    /* LINK */
+    .auth-link {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #000;
+    }
+
+    .auth-link a {
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .auth-link a:hover {
+      opacity: 0.7;
+    }
+
+    /* ERROR */
+    .error-message {
+      display: none;
+      background: #fff0f0;
+      border: 1px solid #ffb4b4;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      color: #b30000;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 10px rgba(255,0,0,0.10);
+    }
+
+    @media (max-width: 850px) {
+      .left-image { display: none; }
+      .right-content { width: 100%; }
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- IMAGEN IZQUIERDA -->
+  <div class="left-image"></div>
+
+  <!-- PANEL DERECHO -->
+  <div class="right-content">
+
+    <!-- LOGO -->
+    <img src="Biomoda.png" class="auth-logo">
+
+    <div class="auth-container">
+
+      <!-- MENSAJE DE ERROR -->
+      <div id="msgError" class="error-message">
+        ✗ Usuario o contraseña incorrectos
+      </div>
+
+      <h2>Iniciar Sesión</h2>
+
+      <form class="auth-form" action="/login" method="POST">
+
+        <label>Correo:</label>
+        <input type="email" name="correo" required>
+
+        <label>Contraseña:</label>
+        <input type="password" name="contrasena" required>
+
+        <button type="submit" class="btn">Entrar</button>
+      </form>
+
+      <p class="auth-link">
+        ¿No tienes cuenta? <a href="/registrar.html">Regístrate aquí</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    const url = new URLSearchParams(window.location.search);
+    if (url.get("error") === "1") {
+      document.getElementById("msgError").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

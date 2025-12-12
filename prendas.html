@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargar Equipos desde Excel</title>
+
+    <!-- TIPOGRAFÍAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+
+            --color-black: #000;
+            --color-white: #fff;
+            --color-gray-light: #f5f5f5;
+            --color-gray: #c9c9c9;
+
+            --transition: 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-white);
+            color: var(--color-black);
+            overflow-x: hidden;
+            text-align: center;
+            padding-bottom: 60px;
+        }
+
+        h1 {
+            font-family: var(--font-title);
+            font-size: 36px;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .logo {
+            width: 150px;
+            margin: 25px auto 5px auto;
+            display: block;
+            opacity: 0.95;
+        }
+
+        .card {
+            background: var(--color-gray-light);
+            width: 450px;
+            padding: 32px;
+            margin: 25px auto;
+            border-radius: 10px;
+            border: 1px solid var(--color-gray);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+            text-align: left;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            background: var(--color-white);
+            border: 1px solid var(--color-gray);
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* BOTONES */
+        .btn-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        button, a.button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 0px;
+            font-size: 15px;
+            cursor: pointer;
+            background: var(--color-black);
+            color: var(--color-white);
+            text-align: center;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        button:hover, a.button:hover {
+            opacity: 0.75;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+            filter: invert(100%); /* BLANCO */
+        }
+
+        .btn-back {
+            width: 100%;
+            margin-top: 10px;
+            background: #333;
+        }
+
+        /* MENÚ LATERAL */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 1000;
+            font-family: var(--font-title);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 260px;
+            height: 100%;
+            background: var(--color-white);
+            border-right: 1px solid var(--color-gray-light);
+            padding-top: 60px;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .sidebar.open { left: 0; }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 30px;
+            text-align: left;
+        }
+
+        .sidebar ul li {
+            margin: 18px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 15px;
+            color: var(--color-black);
+            text-transform: uppercase;
+            transition: var(--transition);
+            letter-spacing: 1px;
+        }
+
+        .sidebar ul li a:hover {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+    <aside class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/registrar.html">Registrar Usuario</a></li>
+            <li><a href="/login.html">Iniciar Sesión</a></li>
+            <li><a href="/busqueda.html">Buscar</a></li>
+            <li><a href="/prendas.html">Cargar Excel</a></li>
+            <li><a href="/download-prenda">Descargar Excel</a></li>
+            <li><a href="/">Ver prendas</a></li>
+            <li><a href="/logout">Cerrar Sesión</a></li>
+        </ul>
+    </aside>
+
+    <img src="Biomoda.png" class="logo">
+
+    <h1>Cargar Equipos desde Excel</h1>
+
+    <div class="card">
+
+        <form action="/upload-prenda" method="POST" enctype="multipart/form-data">
+
+            <label for="excelFile">Selecciona archivo Excel (.xlsx)</label>
+            <input id="excelFile" type="file" name="excelFile" accept=".xlsx, .xls" required>
+
+            <div class="btn-row">
+                <button type="submit">
+                    <img src="https://cdn-icons-png.flaticon.com/512/160/160247.png" class="icon">
+                    Subir
+                </button>
+
+                <button type="button" onclick="window.location.href='/download-prenda'">
+                    <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="icon">
+                    Descargar
+                </button>
+            </div>
+
+            <a class="button btn-back" href="/">Volver</a>
+
+        </form>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("sidebar").classList.toggle("open");
+        }
+    </script>
+
+</body>
+</html>
